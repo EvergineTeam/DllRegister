@@ -1,0 +1,54 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;netcoreapp3.1;netstandard2.0;monoandroid81;xamarin.ios10</TargetFrameworks>
+		<TargetFramework>net6.0</TargetFramework>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+		<Description>Helpers to load native libraries in Net projects.</Description>
+		<PackageProjectUrl>https://evergine.com/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/EvergineTeam/DllRegister</RepositoryUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<PackageTags>dllimport;csharp;dllmap;evergine</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<Choose>
+		<When Condition="$(TargetFramework.StartsWith('netstandard'))">
+			<PropertyGroup>
+				<DefineConstants>NETSTANDARD</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<Compile Include="NetStandard\**\*.cs" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(TargetFramework.StartsWith('net'))">
+			<PropertyGroup>
+				<DefineConstants>NET</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<Compile Include="Net\**\*.cs" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(TargetFramework.Contains('android'))">
+			<PropertyGroup>
+				<DefineConstants>ANDROID</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<Compile Include="Platforms\Android\**\*.cs" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(TargetFramework.Contains('ios'))">
+			<PropertyGroup>
+				<DefineConstants>IOS</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<Compile Include="Platforms\iOS\**\*.cs" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<ItemGroup>
+		<Compile Include="Shared\**\*.cs" />
+	</ItemGroup>
+</Project>
