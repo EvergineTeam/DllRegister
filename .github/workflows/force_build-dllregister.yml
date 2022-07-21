@@ -28,7 +28,6 @@ jobs:
       - name: Generate NuGet packages
         id: build_nugets
         run: |
-          cd ./Generator
           ./Evergine.DllRegister/Generate-NuGets.ps1 -csprojPath Evergine.DllRegister\Evergine.DllRegister.csproj -outputfolder ${{  env.nugetOutputPath  }}
       - name: Publish NuGet
         shell: pwsh
@@ -36,7 +35,7 @@ jobs:
         env:
           token: ${{secrets.EVERGINE_NUGETORG_TOKEN}}
         run: |
-          cd ./Generator/${{  env.nugetOutputPath  }}
+          cd ./${{  env.nugetOutputPath  }}
           dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols -k "$env:token" -s https://api.nuget.org/v3/index.json
 #      - name: SendGrid Mail Action
 #        if: ${{ failure() }}
