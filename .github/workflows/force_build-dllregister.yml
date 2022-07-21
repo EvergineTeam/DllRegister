@@ -39,7 +39,7 @@ jobs:
         env:
           token: ${{secrets.EVERGINE_NUGETORG_TOKEN}}
         run: |
-          cd ./${{  env.nugetOutputPath  }}
+          cd ./Evergine.DllRegister/${{  env.nugetOutputPath  }}
           dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols -k "$env:token" -s https://api.nuget.org/v3/index.json
 #      - name: SendGrid Mail Action
 #        if: ${{ failure() }}
