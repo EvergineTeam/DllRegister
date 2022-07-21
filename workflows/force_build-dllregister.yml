@@ -1,4 +1,4 @@
-name: Force build Imgui
+name: Force build DllRegister
 on:
   workflow_dispatch:
     inputs:
@@ -9,11 +9,6 @@ on:
         default: false
 
 env:
-  filePath: ${{  'xr.xml'  }}
-  fileTmpPath: ${{  'xr.xml_tmp'  }}
-  basePath: ${{  'KhronosRegistry'  }}
-  sourceUrl: ${{  'https://raw.githubusercontent.com/KhronosGroup/OpenXR-Docs/master/specification/registry/xr.xml'  }}
-  selfUrl: ${{  'https://raw.githubusercontent.com/EvergineTeam/OpenXR.NET/main/KhronosRegistry/xr.xml'  }}
   nugetOutputPath: ${{  'nupkgs'  }}
 
 jobs:
@@ -21,29 +16,20 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: microsoft/setup-msbuild@v1.1
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: |
+          dotnet-version:
             3.1.x
-            5.x
             6.x
       - uses: nuget/setup-nuget@v1
         with:
           nuget-version: "6.x"
-      - name: Generate Bindings
-        id: build_bindings
-        run: |
-          cd ./Generator
-          ./Generate-Bindings-Imgui.ps1
-      - name: Commit if update
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: Updating Imgui version
       - name: Generate NuGet packages
         id: build_nugets
         run: |
           cd ./Generator
-          ./Generate-NuGets.ps1 -csprojPath Evergine.Bindings.Imgui\Evergine.Bindings.Imgui.csproj -outputfolder ${{  env.nugetOutputPath  }}
+          ./Evergine.DllRegister/Generate-NuGets.ps1 -csprojPath Evergine.DllRegister\Evergine.DllRegister.csproj -outputfolder ${{  env.nugetOutputPath  }}
       - name: Publish NuGet
         shell: pwsh
         if: ${{ success() && github.event.inputs.publishEnabled == 'true' }}
