@@ -9,7 +9,7 @@
 		<PackageTags>dllimport;csharp;dllmap;evergine</PackageTags>
 		<PackageIcon>icon.png</PackageIcon>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<!--<GeneratePackageOnBuild>true</GeneratePackageOnBuild>-->
 	</PropertyGroup>
 
 	<Choose>
