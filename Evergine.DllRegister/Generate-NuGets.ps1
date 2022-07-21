@@ -83,7 +83,7 @@ $symbols = "false"
 
 # Generate packages
 LogDebug "START packaging process"
-& $msbuildPath "Evergine.DllRegister\Evergine.DllRegister.csproj" /t:restore,pack /p:Configuration=$buildConfiguration /v:$buildVerbosity /p:PackageOutputPath="$absoluteOutputFolder" /p:IncludeSymbols=$symbols /p:SymbolPackageFormat=snupkg /p:Version=$versionWithSuffix
+& $msbuildPath "$csprojPath" /t:restore,pack /p:Configuration=$buildConfiguration /v:$buildVerbosity /p:PackageOutputPath="$absoluteOutputFolder" /p:IncludeSymbols=$symbols /p:SymbolPackageFormat=snupkg /p:Version=$versionWithSuffix
 if($?)
 {
    LogDebug "END packaging process"
