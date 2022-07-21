@@ -17,7 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: microsoft/setup-msbuild@v1.1
-      #- uses: actions/setup-dotnet@v1
+      - uses: actions/setup-dotnet@v1
+      - name: Install workload Android
+        run: dotnet workload install android
+      - name: Install workload iOS
+        run: dotnet workload install ios
       #  with:
       #    dotnet-version:
       #      3.1.x
