@@ -1,19 +1,26 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netcoreapp3.1;netstandard2.0;monoandroid81;xamarin.ios10</TargetFrameworks>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net461;netstandard2.0;monoandroid81;net6-android;net6.0-ios</TargetFrameworks>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<Description>Helpers to load native libraries in Net projects.</Description>
 		<PackageProjectUrl>https://evergine.com/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/EvergineTeam/DllRegister</RepositoryUrl>
-		<PackageIcon>icon.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<PackageTags>dllimport;csharp;dllmap;evergine</PackageTags>
+		<PackageIcon>icon.png</PackageIcon>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<Choose>
+		<When Condition="$(TargetFramework.StartsWith('monoandroid'))">
+			<PropertyGroup>
+				<DefineConstants>ANDROID</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<Compile Include="Platforms\Android\**\*.cs" />
+			</ItemGroup>
+		</When>
 		<When Condition="$(TargetFramework.StartsWith('netstandard'))">
 			<PropertyGroup>
 				<DefineConstants>NETSTANDARD</DefineConstants>
@@ -22,33 +29,39 @@
 				<Compile Include="NetStandard\**\*.cs" />
 			</ItemGroup>
 		</When>
+		<When Condition="$(TargetFramework.StartsWith('net461'))">
+			<PropertyGroup>
+				<DefineConstants>NETFRAMEWORK</DefineConstants>
+			</PropertyGroup>
+			<ItemGroup>
+				<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+				<Compile Include="NetFramework\**\*.cs" />
+			</ItemGroup>
+		</When>
 		<When Condition="$(TargetFramework.StartsWith('net'))">
 			<PropertyGroup>
 				<DefineConstants>NET</DefineConstants>
 			</PropertyGroup>
 			<ItemGroup>
+				<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
 				<Compile Include="Net\**\*.cs" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(TargetFramework.Contains('android'))">
-			<PropertyGroup>
-				<DefineConstants>ANDROID</DefineConstants>
-			</PropertyGroup>
-			<ItemGroup>
-				<Compile Include="Platforms\Android\**\*.cs" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(TargetFramework.Contains('ios'))">
-			<PropertyGroup>
-				<DefineConstants>IOS</DefineConstants>
-			</PropertyGroup>
-			<ItemGroup>
-				<Compile Include="Platforms\iOS\**\*.cs" />
 			</ItemGroup>
 		</When>
 	</Choose>
 
 	<ItemGroup>
 		<Compile Include="Shared\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="icon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 using System.Reflection;
 
-namespace Evergine.Platform
+namespace Evergine.DllRegister
 {
     /// <summary>
     /// Helpers to load native libraries.
@@ -22,7 +22,7 @@ namespace Evergine.Platform
         /// <param name="mapping">The mapping.</param>
         public static void Register(Assembly assembly, INativeLibraryRegisterMapping mapping)
         {
-            // ios do not need dllregister.
+            // iOS do not need dllregister.
         }
     }
 }

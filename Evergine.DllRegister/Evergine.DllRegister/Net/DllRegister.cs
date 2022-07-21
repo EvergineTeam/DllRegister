@@ -57,7 +57,7 @@ namespace Evergine.DllRegister
             if (mappings.ContainsKey(assemblyLocation))
             {
                 var mapping = mappings[assemblyLocation];
-                var runningPlatform = OperatingSystemHelper.GetCurrentPlatfom();
+                var runningPlatform = OperatingSystemHelper.GetCurrentPlatform();
                 if (mapping.TryGetLibraryNameFor(originalLibName, runningPlatform, out mappedLibName))
                 {
                     return true;
@@ -72,7 +72,7 @@ namespace Evergine.DllRegister
                 return false;
             }
 
-            var os = OperatingSystemHelper.GetCurrentPlatfom().ToString().ToLowerInvariant();
+            var os = OperatingSystemHelper.GetCurrentPlatform().ToString();
             var wordsize = RuntimeInformation.OSArchitecture == Architecture.X64 || RuntimeInformation.OSArchitecture == Architecture.Arm64 ? "64" : "32";
             var cpu = "x86";
             switch (RuntimeInformation.ProcessArchitecture)

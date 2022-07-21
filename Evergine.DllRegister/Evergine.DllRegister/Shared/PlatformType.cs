@@ -48,8 +48,16 @@ namespace Evergine.DllRegister
         Web,
     }
 
+    /// <summary>
+    /// Helper class used for extension methods.
+    /// </summary>
     public static class Helper
     {
+        /// <summary>
+        /// Override ToString method of PlatformType enum.
+        /// </summary>
+        /// <param name="value">The platform type to convert.</param>
+        /// <returns>The name of the selected platform.</returns>
         public static string ToString(PlatformType value)
         {
             switch (value)

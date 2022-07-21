@@ -88,7 +88,7 @@ namespace Evergine.DllRegister
         /// Gets current executing platform.
         /// </summary>
         /// <returns>Executing platform if found. Returns <see cref="PlatformType.Undefined"/> if platform could not be determined.</returns>
-        public static PlatformType GetCurrentPlatfom()
+        public static PlatformType GetCurrentPlatform()
         {
             if (IsOSPlatform(PlatformType.Windows))
             {

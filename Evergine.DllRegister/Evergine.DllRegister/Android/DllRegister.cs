@@ -2,7 +2,7 @@
 
 using System.Reflection;
 
-namespace Evergine.Platform
+namespace Evergine.DllRegister
 {
     /// <summary>
     /// Helpers to load native libraries.
