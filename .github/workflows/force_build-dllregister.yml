@@ -17,14 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: microsoft/setup-msbuild@v1.1
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version:
-            3.1.x
-            6.x
-      - uses: nuget/setup-nuget@v1
-        with:
-          nuget-version: "6.x"
+      #- uses: actions/setup-dotnet@v1
+      #  with:
+      #    dotnet-version:
+      #      3.1.x
+      #      6.x
+      #- uses: nuget/setup-nuget@v1
+      #  with:
+      #    nuget-version: "6.x"
       - name: Generate NuGet packages
         id: build_nugets
         run: |
@@ -38,19 +38,19 @@ jobs:
         run: |
           cd ./Generator/${{  env.nugetOutputPath  }}
           dotnet nuget push "**/*.nupkg" --skip-duplicate --no-symbols -k "$env:token" -s https://api.nuget.org/v3/index.json
-      - name: SendGrid Mail Action
-        if: ${{ failure() }}
-        uses: mmichailidis/sendgrid-mail-action@v1.1
-        with:
-          # The token for sendgrid
-          sendgrid-token: ${{ secrets.WAVE_SENDGRID_TOKEN }}
-          # List of emails separated by comma that the email will go
-          mail: ${{ secrets.EVERGINE_EMAILREPORT_LIST }}
-          # The email that will be shown as sender
-          from: ${{ secrets.EVERGINE_EMAIL }}
-          # The subject of the email
-          subject: Imgui Update NuGet has failed
-          # Defines if it should be one email with multiple address or multiple emails with a single address
-          individual: false
-          # The body of the mail. The placeholders that can be used are $EVENT$, $ISSUE$, $ACTION$
-          text: something when wrong when updating Imgui bindings
+#      - name: SendGrid Mail Action
+#        if: ${{ failure() }}
+#        uses: mmichailidis/sendgrid-mail-action@v1.1
+#        with:
+#          # The token for sendgrid
+#          sendgrid-token: ${{ secrets.WAVE_SENDGRID_TOKEN }}
+#          # List of emails separated by comma that the email will go
+#          mail: ${{ secrets.EVERGINE_EMAILREPORT_LIST }}
+#          # The email that will be shown as sender
+#          from: ${{ secrets.EVERGINE_EMAIL }}
+#          # The subject of the email
+#          subject: Imgui Update NuGet has failed
+#          # Defines if it should be one email with multiple address or multiple emails with a single address
+#          individual: false
+#          # The body of the mail. The placeholders that can be used are $EVENT$, $ISSUE$, $ACTION$
+#          text: something when wrong when updating Imgui bindings
